@@ -1,0 +1,8 @@
+all:
+  tr_simpletip:
+    default:
+      position:         left
+      showEffect:       fade
+      hideEffect:       fade
+      baseClass:        simpletip
+      

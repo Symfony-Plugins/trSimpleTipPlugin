@@ -1,0 +1,17 @@
+/* 
+    Document   : simpletip
+    Created on : Jul 25, 2011, 3:26:42 PM
+    Author     : Martinescu Petrica
+*/
+
+.simpletip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  display: none;
+  padding: 5px;
+  color: #303030;
+  background-color: #F5F5B5;
+  border: 1px solid #DECA7E;
+}
