@@ -1,0 +1,137 @@
+trSimpleTipPlugin
+=================
+
+The `trSimpleTipPlugin` offers a helper that integrate the [SimpleTip](http://craigsworks.com/projects/simpletip/) jQuery Plugin.
+
+Installation
+------------
+
+  * Install the plugin (via a package)
+
+        symfony plugin:install trSimpleTipPlugin
+
+  * Install the plugin (via a Subversion checkout)
+  
+        svn co http://svn.symfony-project.com/plugins/trSimpleTipPlugin/trunk
+
+This plugin requires sfJqueryReloadedPlugin, only if you haven't already included the jQuery Javascript framework inside your project.
+
+Usage
+-----
+
+Make sure you have included the SimpleTip helper inside your template file:
+
+    [php]
+    use_helper('SimpleTip');
+
+or, if you have installed the sfJqueryReloadedPlugin, use:
+
+    [php]
+    use_helper('jQuery', 'SimpleTip');
+
+**Example 1**
+
+For the following HTML code:
+
+    [html]
+    Some test <a href="#" title="Some simple tip info" alt="Some simple tip info">Test link</a>
+
+We can use the following call:
+
+    [php]
+    <?php simpletip('a[title]') ?>
+
+This will initialize the SimpleTip jQuery Plugin for all anchors inside the HTML document, that have a valid title tag. The actual JS code will be:
+
+    [Javascript]
+    <script type="text/javascript">
+      //<![CDATA[
+      $('a[title]').each(function() {
+        var options = {
+          "position":"left",
+          "showEffect":"fade",
+          "hideEffect":"fade",
+          "baseClass":"simpletip"
+        };
+        options['content'] = $(this).attr('title');
+        $(this).simpletip(options);
+        $(this).attr('title', '');
+        $(this).attr('alt', '');
+      });
+      //]]>
+    </script>
+
+**Example 2**
+
+For the following HTML code:
+
+    [html]
+    Another example <span class="tip">simple tip activated span</span>
+
+We can use the following call:
+
+    [php]
+    <?php simpletip('span.tip', array('content' => 'Span simple tip', 'position' => 'right')) ?>
+
+That will initialize the SimpleTip jQuery Plugin for all span elements with `tip` class, inside the HTML document.
+As you can see, the span has no title attribute, but we have given it from the configuration array, available as a second argument for the SimpleTip Helper.
+We can further extend the configuration by simple appending more configuration options to the array.
+For more information about the available SimpleTip configuration options please read the [documentation](http://craigsworks.com/projects/simpletip/#).
+
+The above PHP code will output:
+
+    [Javascript]
+    <script type="text/javascript">
+      //<![CDATA[
+      $('span.tip').simpletip({
+        "position":"right",
+        "showEffect":"fade",
+        "hideEffect":"fade",
+        "baseClass":"simpletip",
+        "content":"Span simple tip"});
+      //]]>
+    </script>
+
+Configuration
+-------------
+
+For complex configurations and in order to avoid code repetition, `trSimpleTipPlugin` makes use of profiles:
+
+  * config/app.yml
+
+        [yml]
+        all:
+          tr_simpletip:
+            default:
+              position:         left
+              showEffect:       fade
+              hideEffect:       fade
+              baseClass:        simpletip
+
+    This is the **default** profile.
+
+  * config/app.yml
+
+        [yml]
+        all:
+          tr_simpletip:
+            my_custom_profile:
+              position:         right
+              showEffect:       slide
+              hideEffect:       slide
+              baseClass:        simpletip
+
+    If we have a custom profile **my_custom_profile** we can easily make us of this profile:
+
+        [php]
+        <?php simpletip('span.tip', array('content' => 'Some content'), 'my_custom_profile');
+
+    Of course, any configuration option will override the ones defined in the profile.
+   
+Sponsor
+-------
+
+This plugin is sponsored by [Tremend Software Consulting](http://www.tremend.ro/)
+
+ [![Tremend Software Consulting](http://www.tremend.ro/sites/all/themes/tremend/images/logo.png)](http://www.tremend.ro/)
+

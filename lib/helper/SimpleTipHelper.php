@@ -3,7 +3,7 @@
 require_once(sfConfig::get('sf_symfony_lib_dir') . '/helper/JavascriptBaseHelper.php');
 
 /**
- * Binds a simpletip jQuery object to an html tag
+ * Binds a simpletip jQuery object to a html tag
  * 
  * Eg: 
  * 
@@ -30,7 +30,7 @@ function simpletip($tag, $settings = array(), $profile = 'default') {
     _simpletip_log('Simpletip profile ' . $profile . ' not loaded or empty.');
   }
   
-  $config += (array)$settings;
+  $config = (array)$settings + $config;
   
   echo _simpletip($tag, $config);
 }
